@@ -7,6 +7,12 @@ parser = argparse.ArgumentParser(description='A program called pyboop')
 parser.add_argument('--input', '-i', type=str, required=True, help='The input file for boopy')
 parser.add_argument('--output', '-o', type=str, required=True, help='The output file for boopy')
 
+class Player:
+    def __init__(self):
+        self.kittens = 6
+        self.cats = 0
+    
+
 class Boop:
     def __init__(self):
         self.board = [['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.']]
