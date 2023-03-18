@@ -27,16 +27,16 @@ class Boop:
 
     
     def placeKitten(self, x, y):
-        if (x > 0) and (x < 6) and (y > 0) and (y < 6):
+        if (x >= 0) and (x < 6) and (y >= 0) and (y < 6):
             if self.board[x][y] == '.':
                 self.board[x][y] = 'k'
                 self.drawBoard()
-                self.boop(x,y)
+                self.kittenboop(x,y)
                 return 1
-        print("Error placing kitten.")
+        print("Error placing kitten at", x,y)
         return -1
     
-    def boop(self, newx, newy):
+    def kittenboop(self, newx, newy):
         # mutate board with new kitten.
         xpos = [-1,0,1]
         ypos = [-1,0,1]
@@ -49,8 +49,16 @@ class Boop:
                     validation_x = newx + x
                     validation_y = newy + y
                     if self.board[validation_x][validation_y] == 'k':
-                        print('Boop', validation_x, validation_y)
-                        self.boop_move(origin_x=validation_x, origin_y=validation_y, off_x=x, off_y=y)
+                        nextvalx = validation_x + x
+                        nextvaly = validation_y + y
+                        if nextvalx <0 or nextvalx > 6 or nextvaly < 0 or nextvaly > 6:
+                            print('out of bounds')
+                        else:
+                            if self.board[nextvalx][nextvaly] == 'k':
+                               print('two kittens, no move')
+                            else: 
+                                print('Boop', validation_x, validation_y)
+                                self.boop_move(origin_x=validation_x, origin_y=validation_y, off_x=x, off_y=y)
 
     
     def boop_move(self, origin_x, origin_y, off_x, off_y):
@@ -76,6 +84,7 @@ def main(args):
     print(f'Running boopy with input file "{args.input}" and output file "{args.output}"')
     boop = Boop()
     boop.drawBoard()
+    print(boop.board)
     print('place 1,1')
     boop.placeKitten(x=1, y=1)
     print('place 1,2')
