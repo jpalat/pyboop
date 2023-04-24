@@ -59,6 +59,9 @@ class Boop:
                         nextvaly = validation_y + y
                         if nextvalx <0 or nextvalx > 6 or nextvaly < 0 or nextvaly > 6:
                             print('out of bounds')
+                            self.board[validation_x][validation_y]='.'
+                            print("dwb")
+                            self.drawBoard()
                         else:
                             if self.board[nextvalx][nextvaly] == 'k':
                                print('two kittens, no move')
