@@ -4,20 +4,33 @@ from pyboop.main import Boop
 
 class BoopTests(unittest.TestCase):
 
-    def setUp(self) -> None:
-        self.newboard = [['.', '.', '.', '.', '.', '.'], 
+    # def setUp(self):
+    #     print("tests set")
+
+    def test_init(self):
+        boop = Boop(6)
+        newboard = [['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.']]
-
-    def test_init(self):
-        boop = Boop()
-        self.assertEqual(boop.board, self.newboard, "board fail.")
+        
+        self.assertEqual(boop.board, newboard, "board fail.")
+    def test_size(self):
+        boop = Boop(3)
+        newboard = [['.', '.', '.'], 
+                    ['.', '.', '.'], 
+                    ['.', '.', '.']]
+        self.assertEqual(boop.board, newboard, "board fail.")
     def test_place(self):
-        boop = Boop()
-        board = copy.deepcopy(self.newboard)
+        boop = Boop(6)
+        board = [['.', '.', '.', '.', '.', '.'], 
+                    ['.', '.', '.', '.', '.', '.'], 
+                    ['.', '.', '.', '.', '.', '.'], 
+                    ['.', '.', '.', '.', '.', '.'], 
+                    ['.', '.', '.', '.', '.', '.'], 
+                    ['.', '.', '.', '.', '.', '.']]
         board[1][1] = 'k'
         boop.placeKitten(x=1, y=1)
         self.assertEqual(boop.board, board, "misplaced kitten")

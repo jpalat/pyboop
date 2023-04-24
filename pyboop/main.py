@@ -14,9 +14,15 @@ class Player:
     
 
 class Boop:
-    def __init__(self):
-        self.board = [['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.']]
-        
+    def __init__(self, size):
+        rows = []
+        for i in range(0,size):
+            cols = []
+            for j in range(0,size):
+                cols.append('.')
+            rows.append(cols)
+        # self.board = [['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.']]
+        self.board = rows
 
     def drawBoard(self):
         print("-------")
@@ -82,7 +88,7 @@ class Boop:
 def main(args):
     # TODO: Implement the main functionality of boopy here
     print(f'Running boopy with input file "{args.input}" and output file "{args.output}"')
-    boop = Boop()
+    boop = Boop(6)
     boop.drawBoard()
     print(boop.board)
     print('place 1,1')
