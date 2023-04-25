@@ -77,7 +77,7 @@ class Boop:
         x = off_x + origin_x
         y = off_y + origin_y
         print ('move: ', origin_x, origin_y, 'to', x, y, 'os', off_x, off_y)
-        if x < 0 or x > 6 or y < 0 or y > 6:
+        if x < 0 or x > self.size or y < 0 or y > self.size:
             print('return kitten')
         else:
             self.board[x][y] = 'k'
