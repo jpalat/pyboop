@@ -78,7 +78,6 @@ class BoopTests(unittest.TestCase):
         self.assertEqual(boop.board, board, "failed to boop kitten")
     def test_place_with_edge_corners(self):
         boop = Boop(3)
-        boop.drawBoard()
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
@@ -89,6 +88,23 @@ class BoopTests(unittest.TestCase):
         boop.placeKitten(row=1, col=1)
         board[1][1] = 'k'
         self.assertEqual(boop.board, board, "failed to boop kitten")
+    def test_two_kitten(self):
+        boop = Boop(6)
+        board = [['.', '.', '.', '.', '.', '.'], 
+                    ['.', '.', '.', '.', '.', '.'], 
+                    ['.', '.', '.', '.', '.', '.'], 
+                    ['.', '.', '.', '.', '.', '.'], 
+                    ['.', '.', '.', '.', '.', '.'], 
+                    ['.', '.', '.', '.', '.', '.']]
+        boop.placeKitten(row=1, col=1)
+        boop.placeKitten(row=1, col=3)
+        boop.placeKitten(row=1, col=4)
+        boop.placeKitten(row=1, col=3)
+        board[1][1] = 'k'
+        board[1][2] = 'k'
+        board[1][3] = 'k'
+        board[1][5] = 'k'
+        self.assertEqual(boop.board, board, "two kittens fail")
 
 if __name__ == '__main__':
     unittest.main()
