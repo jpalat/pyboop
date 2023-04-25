@@ -4,8 +4,8 @@ from pyboop.main import Boop
 
 class BoopTests(unittest.TestCase):
 
-    # def setUp(self):
-    #     print("tests set")
+    def setUp(self):
+        print("tests set")
 
     def test_init(self):
         boop = Boop(6)
@@ -32,15 +32,15 @@ class BoopTests(unittest.TestCase):
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.']]
         board[1][1] = 'k'
-        boop.placeKitten(x=1, y=1)
+        boop.placeKitten(row=1, col=1)
         self.assertEqual(boop.board, board, "misplaced kitten")
     def test_place_small(self):
         boop = Boop(3)
         board = [['.', '.', '.'], 
                     ['.', '.', '.'], 
                     ['.', '.', '.']]
-        board[1][1] = 'k'
-        boop.placeKitten(x=1, y=1)
+        board[0][2] = 'k'
+        boop.placeKitten(row=0, col=2)
         self.assertEqual(boop.board, board, "misplaced kitten")
     def test_place_and_boop(self):
         boop = Boop(3)
@@ -48,19 +48,42 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placeKitten(x=1, y=1)
-        boop.placeKitten(x=0, y=1)
+        boop.placeKitten(row=1, col=1)
+        boop.placeKitten(row=0, col =1)
         board[0][1] = 'k'
         board[2][1] = 'k'
         self.assertEqual(boop.board, board, "failed to boop kitten")
-    def test_place_with_edge(self):
+    def test_place_with_edge_left(self):
         boop = Boop(3)
         boop.drawBoard()
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placeKitten(x=0, y=1)
-        boop.placeKitten(x=1, y=1)
+        boop.placeKitten(row=0, col=1)
+        boop.placeKitten(row=1, col=1)
+        board[1][1] = 'k'
+        self.assertEqual(boop.board, board, "failed to boop kitten")
+    def test_place_with_edge_top(self):
+        boop = Boop(3)
+        boop.drawBoard()
+        board = [['.', '.', '.'], 
+                 ['.', '.', '.'],
+                 ['.', '.', '.']]
+        boop.placeKitten(row=1, col=0)
+        boop.placeKitten(row=1, col=1)
+        board[1][1] = 'k'
+        self.assertEqual(boop.board, board, "failed to boop kitten")
+    def test_place_with_edge_right(self):
+        boop = Boop(3)
+        boop.drawBoard()
+        board = [['.', '.', '.'], 
+                 ['.', '.', '.'],
+                 ['.', '.', '.']]
+        boop.placeKitten(row=0, col=0)
+        boop.placeKitten(row=0, col=2)
+        boop.placeKitten(row=2, col=0)
+        boop.placeKitten(row=2, col=2)
+        boop.placeKitten(row=1, col=1)
         board[1][1] = 'k'
         self.assertEqual(boop.board, board, "failed to boop kitten")
 
