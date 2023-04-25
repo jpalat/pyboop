@@ -32,7 +32,7 @@ class Boop:
             print("\n")
 
     
-    def placeKitten(self, x, y):
+    def placeKitten(self, row, col):
         if (x >= 0) and (x < 6) and (y >= 0) and (y < 6):
             if self.board[x][y] == '.':
                 self.board[x][y] = 'k'
