@@ -15,6 +15,7 @@ class Player:
 
 class Boop:
     def __init__(self, size):
+        self.size = size
         rows = []
         for i in range(0,size):
             cols = []
@@ -33,13 +34,13 @@ class Boop:
 
     
     def placeKitten(self, row, col):
-        if (x >= 0) and (x < 6) and (y >= 0) and (y < 6):
-            if self.board[x][y] == '.':
-                self.board[x][y] = 'k'
+        if (row >= 0) and (row < self.size) and (col >= 0) and (col < self.size):
+            if self.board[row][col] == '.':
+                self.board[row][col] = 'k'
                 self.drawBoard()
-                self.kittenboop(x,y)
+                self.kittenboop(row,col)
                 return 1
-        print("Error placing kitten at", x,y)
+        print("Error placing kitten at", row,col)
         return -1
     
     def kittenboop(self, newx, newy):
@@ -54,20 +55,22 @@ class Boop:
                 else:
                     validation_x = newx + x
                     validation_y = newy + y
-                    if self.board[validation_x][validation_y] == 'k':
-                        nextvalx = validation_x + x
-                        nextvaly = validation_y + y
-                        if nextvalx <0 or nextvalx > 6 or nextvaly < 0 or nextvaly > 6:
-                            print('out of bounds')
-                            self.board[validation_x][validation_y]='.'
-                            print("dwb")
-                            self.drawBoard()
-                        else:
-                            if self.board[nextvalx][nextvaly] == 'k':
-                               print('two kittens, no move')
-                            else: 
-                                print('Boop', validation_x, validation_y)
-                                self.boop_move(origin_x=validation_x, origin_y=validation_y, off_x=x, off_y=y)
+                    if (validation_x >= 0) and (validation_x < self.size) and (validation_y >= 0) and (validation_y < self.size):
+                        if self.board[validation_x][validation_y] == 'k':
+                            nextvalx = validation_x + x
+                            nextvaly = validation_y + y
+                            print('nvx, nvy', newx, newy, nextvalx, nextvaly)
+                            if nextvalx <0 or nextvalx > self.size-1 or nextvaly < 0 or nextvaly > self.size-1:
+                                print('out of bounds')
+                                self.board[validation_x][validation_y]='.'
+                            else:
+                                if self.board[nextvalx][nextvaly] == 'k':
+                                    print('two kittens, no move')
+                                else: 
+                                    print('Boop', validation_x, validation_y)
+                                    self.boop_move(origin_x=validation_x, origin_y=validation_y, off_x=x, off_y=y)
+                    else:
+                        print('validation off board')
 
     
     def boop_move(self, origin_x, origin_y, off_x, off_y):
