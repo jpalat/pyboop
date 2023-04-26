@@ -22,7 +22,6 @@ class Boop:
             for j in range(0,size):
                 cols.append('.')
             rows.append(cols)
-        # self.board = [['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.'],['.','.','.','.','.','.']]
         self.board = rows
 
     def drawBoard(self):
@@ -59,7 +58,6 @@ class Boop:
                         if self.board[validation_x][validation_y] == 'k':
                             nextvalx = validation_x + x
                             nextvaly = validation_y + y
-                            print('nvx, nvy', newx, newy, nextvalx, nextvaly)
                             if nextvalx <0 or nextvalx > self.size-1 or nextvaly < 0 or nextvaly > self.size-1:
                                 print('out of bounds')
                                 self.board[validation_x][validation_y]='.'
@@ -96,13 +94,7 @@ def main(args):
     print(f'Running boopy with input file "{args.input}" and output file "{args.output}"')
     boop = Boop(6)
     boop.drawBoard()
-    print(boop.board)
-    print('place 1,1')
-    boop.placeKitten(x=1, y=1)
-    print('place 1,2')
-    boop.placeKitten(x=1, y=2)
-    boop.placeKitten(x=1, y=1)
-    boop.placeKitten(x=2, y=2)
+
 
 # Call the main function with command-line arguments
 if __name__ == '__main__':
