@@ -1,11 +1,16 @@
 # Import any necessary modules
 import sys
 import argparse
+from enum import Enum
 
 # Define command-line arguments
 parser = argparse.ArgumentParser(description='A program called pyboop')
 parser.add_argument('--input', '-i', type=str, required=True, help='The input file for boopy')
 parser.add_argument('--output', '-o', type=str, required=True, help='The output file for boopy')
+
+class Piece(Enum):
+    Cat = 'C'
+    Kitten = 'k'
 
 class Player:
     def __init__(self):
@@ -32,10 +37,10 @@ class Boop:
             print("\n")
 
     
-    def placeKitten(self, row, col):
+    def placePiece(self, row, col, type:Piece):
         if (row >= 0) and (row < self.size) and (col >= 0) and (col < self.size):
             if self.board[row][col] == '.':
-                self.board[row][col] = 'k'
+                self.board[row][col] = type.value
                 self.drawBoard()
                 self.kittenboop(row,col)
                 return 1

@@ -1,6 +1,6 @@
 import unittest
 import copy
-from pyboop.main import Boop
+from pyboop.main import Boop, Piece
 
 class BoopTests(unittest.TestCase):
 
@@ -32,7 +32,7 @@ class BoopTests(unittest.TestCase):
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.']]
         board[1][1] = 'k'
-        boop.placeKitten(row=1, col=1)
+        boop.placePiece(row=1, col=1, type=Piece.Kitten)
         self.assertEqual(boop.board, board, "misplaced kitten")
     def test_place_small(self):
         boop = Boop(3)
@@ -40,7 +40,7 @@ class BoopTests(unittest.TestCase):
                     ['.', '.', '.'], 
                     ['.', '.', '.']]
         board[0][2] = 'k'
-        boop.placeKitten(row=0, col=2)
+        boop.placePiece(row=0, col=2, type=Piece.Kitten)
         self.assertEqual(boop.board, board, "misplaced kitten")
     def test_place_and_boop(self):
         boop = Boop(3)
@@ -48,8 +48,8 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placeKitten(row=1, col=1)
-        boop.placeKitten(row=0, col =1)
+        boop.placePiece(row=1, col=1, type=Piece.Kitten)
+        boop.placePiece(row=0, col =1, type=Piece.Kitten)
         board[0][1] = 'k'
         board[2][1] = 'k'
         self.assertEqual(boop.board, board, "failed to boop kitten")
@@ -59,8 +59,8 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placeKitten(row=0, col=1)
-        boop.placeKitten(row=1, col=1)
+        boop.placePiece(row=0, col=1, type=Piece.Kitten)
+        boop.placePiece(row=1, col=1, type=Piece.Kitten)
         board[1][1] = 'k'
         self.assertEqual(boop.board, board, "failed to boop kitten")
     def test_place_with_edge_cardinal(self):
@@ -69,11 +69,11 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placeKitten(row=0, col=1)
-        boop.placeKitten(row=1, col=0)
-        boop.placeKitten(row=1, col=2)
-        boop.placeKitten(row=2, col=1)
-        boop.placeKitten(row=1, col=1)
+        boop.placePiece(row=0, col=1, type=Piece.Kitten)
+        boop.placePiece(row=1, col=0, type=Piece.Kitten)
+        boop.placePiece(row=1, col=2, type=Piece.Kitten)
+        boop.placePiece(row=2, col=1, type=Piece.Kitten)
+        boop.placePiece(row=1, col=1, type=Piece.Kitten)
         board[1][1] = 'k'
         self.assertEqual(boop.board, board, "failed to boop kitten")
     def test_place_with_edge_corners(self):
@@ -81,11 +81,11 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placeKitten(row=0, col=0)
-        boop.placeKitten(row=0, col=2)
-        boop.placeKitten(row=2, col=0)
-        boop.placeKitten(row=2, col=2)
-        boop.placeKitten(row=1, col=1)
+        boop.placePiece(row=0, col=0, type=Piece.Kitten)
+        boop.placePiece(row=0, col=2, type=Piece.Kitten)
+        boop.placePiece(row=2, col=0, type=Piece.Kitten)
+        boop.placePiece(row=2, col=2, type=Piece.Kitten)
+        boop.placePiece(row=1, col=1, type=Piece.Kitten)
         board[1][1] = 'k'
         self.assertEqual(boop.board, board, "failed to boop kitten")
     def test_two_kitten(self):
@@ -96,10 +96,10 @@ class BoopTests(unittest.TestCase):
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.']]
-        boop.placeKitten(row=1, col=1)
-        boop.placeKitten(row=1, col=3)
-        boop.placeKitten(row=1, col=4)
-        boop.placeKitten(row=1, col=3)
+        boop.placePiece(row=1, col=1, type=Piece.Kitten)
+        boop.placePiece(row=1, col=3, type=Piece.Kitten)
+        boop.placePiece(row=1, col=4, type=Piece.Kitten)
+        boop.placePiece(row=1, col=3, type=Piece.Kitten)
         board[1][1] = 'k'
         board[1][2] = 'k'
         board[1][3] = 'k'
