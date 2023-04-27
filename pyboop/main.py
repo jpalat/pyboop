@@ -31,13 +31,16 @@ class Boop:
 
     def drawBoard(self):
         print("-------")
-        for i in self.board:
+        print("  a b c d e f")
+        for index, i in enumerate(self.board):
+            print(index , end=" ")
             for j in i:
                 if isinstance(j,Piece):
                     print(j.value, end=" ")
                 else:
                     print(j, end=" ")
-            print("\n")
+            print(index)
+        print("  a b c d e f")
 
     
     def placePiece(self, row, col, type:Piece):
