@@ -33,14 +33,17 @@ class Boop:
         print("-------")
         for i in self.board:
             for j in i:
-                print(j, end=" ")
+                if isinstance(j,Piece):
+                    print(j.value, end=" ")
+                else:
+                    print(j, end=" ")
             print("\n")
 
     
     def placePiece(self, row, col, type:Piece):
         if (row >= 0) and (row < self.size) and (col >= 0) and (col < self.size):
             if self.board[row][col] == '.':
-                self.board[row][col] = type.value
+                self.board[row][col] = type
                 self.drawBoard()
                 self.kittenboop(row,col)
                 return 1
@@ -60,14 +63,14 @@ class Boop:
                     validation_x = newx + x
                     validation_y = newy + y
                     if (validation_x >= 0) and (validation_x < self.size) and (validation_y >= 0) and (validation_y < self.size):
-                        if self.board[validation_x][validation_y] == 'k':
+                        if self.board[validation_x][validation_y] == Piece.Kitten:
                             nextvalx = validation_x + x
                             nextvaly = validation_y + y
                             if nextvalx <0 or nextvalx > self.size-1 or nextvaly < 0 or nextvaly > self.size-1:
                                 print('out of bounds')
                                 self.board[validation_x][validation_y]='.'
                             else:
-                                if self.board[nextvalx][nextvaly] == 'k':
+                                if self.board[nextvalx][nextvaly] == Piece.Kitten:
                                     print('two kittens, no move')
                                 else: 
                                     print('Boop', validation_x, validation_y)
@@ -83,7 +86,7 @@ class Boop:
         if x < 0 or x > self.size or y < 0 or y > self.size:
             print('return kitten')
         else:
-            self.board[x][y] = 'k'
+            self.board[x][y] = Piece.Kitten
         self.board[origin_x][origin_y] = '.'
         self.drawBoard()
         

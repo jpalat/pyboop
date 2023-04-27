@@ -31,7 +31,7 @@ class BoopTests(unittest.TestCase):
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.']]
-        board[1][1] = 'k'
+        board[1][1] = Piece.Kitten
         boop.placePiece(row=1, col=1, type=Piece.Kitten)
         self.assertEqual(boop.board, board, "misplaced kitten")
     def test_place_small(self):
@@ -39,7 +39,7 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                     ['.', '.', '.'], 
                     ['.', '.', '.']]
-        board[0][2] = 'k'
+        board[0][2] = Piece.Kitten
         boop.placePiece(row=0, col=2, type=Piece.Kitten)
         self.assertEqual(boop.board, board, "misplaced kitten")
     def test_place_and_boop(self):
@@ -50,8 +50,8 @@ class BoopTests(unittest.TestCase):
                  ['.', '.', '.']]
         boop.placePiece(row=1, col=1, type=Piece.Kitten)
         boop.placePiece(row=0, col =1, type=Piece.Kitten)
-        board[0][1] = 'k'
-        board[2][1] = 'k'
+        board[0][1] = Piece.Kitten
+        board[2][1] = Piece.Kitten
         self.assertEqual(boop.board, board, "failed to boop kitten")
     def test_place_with_edge_left(self):
         boop = Boop(3)
@@ -61,7 +61,7 @@ class BoopTests(unittest.TestCase):
                  ['.', '.', '.']]
         boop.placePiece(row=0, col=1, type=Piece.Kitten)
         boop.placePiece(row=1, col=1, type=Piece.Kitten)
-        board[1][1] = 'k'
+        board[1][1] = Piece.Kitten
         self.assertEqual(boop.board, board, "failed to boop kitten")
     def test_place_with_edge_cardinal(self):
         boop = Boop(3)
@@ -74,7 +74,7 @@ class BoopTests(unittest.TestCase):
         boop.placePiece(row=1, col=2, type=Piece.Kitten)
         boop.placePiece(row=2, col=1, type=Piece.Kitten)
         boop.placePiece(row=1, col=1, type=Piece.Kitten)
-        board[1][1] = 'k'
+        board[1][1] = Piece.Kitten
         self.assertEqual(boop.board, board, "failed to boop kitten")
     def test_place_with_edge_corners(self):
         boop = Boop(3)
@@ -86,7 +86,7 @@ class BoopTests(unittest.TestCase):
         boop.placePiece(row=2, col=0, type=Piece.Kitten)
         boop.placePiece(row=2, col=2, type=Piece.Kitten)
         boop.placePiece(row=1, col=1, type=Piece.Kitten)
-        board[1][1] = 'k'
+        board[1][1] = Piece.Kitten
         self.assertEqual(boop.board, board, "failed to boop kitten")
     def test_two_kitten(self):
         boop = Boop(6)
@@ -100,10 +100,10 @@ class BoopTests(unittest.TestCase):
         boop.placePiece(row=1, col=3, type=Piece.Kitten)
         boop.placePiece(row=1, col=4, type=Piece.Kitten)
         boop.placePiece(row=1, col=3, type=Piece.Kitten)
-        board[1][1] = 'k'
-        board[1][2] = 'k'
-        board[1][3] = 'k'
-        board[1][5] = 'k'
+        board[1][1] = Piece.Kitten
+        board[1][2] = Piece.Kitten
+        board[1][3] = Piece.Kitten
+        board[1][5] = Piece.Kitten
         self.assertEqual(boop.board, board, "two kittens fail")
 
 if __name__ == '__main__':
