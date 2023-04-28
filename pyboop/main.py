@@ -48,13 +48,13 @@ class Boop:
             if self.board[row][col] == '.':
                 self.board[row][col] = type
                 self.drawBoard()
-                self.kittenboop(row,col)
+                self.boop(row, col, type)
                 return 1
-        print("Error placing kitten at", row,col)
+        print("Error placing piece at", row,col)
         return -1
     
-    def kittenboop(self, newx, newy):
-        # mutate board with new kitten.
+    def boop(self, newx, newy, type:Piece):
+        # mutate board with new Piece.
         xpos = [-1,0,1]
         ypos = [-1,0,1]
         for x in xpos:
@@ -65,7 +65,8 @@ class Boop:
                 else:
                     validation_x = newx + x
                     validation_y = newy + y
-                    if (validation_x >= 0) and (validation_x < self.size) and (validation_y >= 0) and (validation_y < self.size):
+                    if (validation_x >= 0) and (validation_x < self.size) and \
+                       (validation_y >= 0) and (validation_y < self.size): 
                         if self.board[validation_x][validation_y] == Piece.Kitten:
                             nextvalx = validation_x + x
                             nextvaly = validation_y + y
@@ -73,11 +74,32 @@ class Boop:
                                 print('out of bounds')
                                 self.board[validation_x][validation_y]='.'
                             else:
-                                if self.board[nextvalx][nextvaly] == Piece.Kitten:
-                                    print('two kittens, no move')
+                                next = self.board[nextvalx][nextvaly]
+                                if next == Piece.Kitten or next == Piece.Cat:
+                                    print('two pieces, no move')
                                 else: 
                                     print('Boop', validation_x, validation_y)
                                     self.boop_move(origin_x=validation_x, origin_y=validation_y, off_x=x, off_y=y)
+                        else:
+                            if self.board[validation_x][validation_y] == Piece.Cat:
+                                print("Validate Cat", validation_x, validation_y, self.board[validation_x][validation_y], type)
+                                if type == Piece.Kitten:
+                                    print('No Boop, kittens do not move Cats.', validation_x, validation_y)
+                                    continue
+                            nextvalx = validation_x + x
+                            nextvaly = validation_y + y
+                            if nextvalx <0 or nextvalx > self.size-1 or nextvaly < 0 or nextvaly > self.size-1:
+                                print('out of bounds')
+                                self.board[validation_x][validation_y]='.'
+                            else:
+                                next = self.board[nextvalx][nextvaly]
+                                if type == Piece.Cat:
+                                    if next == Piece.Kitten or next == Piece.Cat:
+                                        print('two pieces, no move')
+                                    else: 
+                                        print('Boop - cat to cat', validation_x, validation_y)
+                                        self.boop_move(origin_x=validation_x, origin_y=validation_y, off_x=x, off_y=y)                                
+
                     else:
                         print('validation off board')
 
@@ -89,7 +111,7 @@ class Boop:
         if x < 0 or x > self.size or y < 0 or y > self.size:
             print('return kitten')
         else:
-            self.board[x][y] = Piece.Kitten
+            self.board[x][y] = self.board[origin_x][origin_y]
         self.board[origin_x][origin_y] = '.'
         self.drawBoard()
         
