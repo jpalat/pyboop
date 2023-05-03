@@ -9,8 +9,21 @@ parser.add_argument('--input', '-i', type=str, required=True, help='The input fi
 parser.add_argument('--output', '-o', type=str, required=True, help='The output file for boopy')
 
 class Piece(Enum):
-    Cat = 'C'
-    Kitten = 'k'
+    Player1Kitten = '1'
+    Player1Cat = '!'
+    Player2Kitten = '2'
+    Player2Cat = '@'
+
+    def is_kitten(self):
+        if self.value == '1' or self.value =='2':
+            return True
+        return False
+    
+    def is_cat(self):
+        if self.value == '!' or self.value == '@':
+            return True
+        return False
+
 
 class Player:
     def __init__(self):
@@ -67,35 +80,39 @@ class Boop:
                     validation_y = newy + y
                     if (validation_x >= 0) and (validation_x < self.size) and \
                        (validation_y >= 0) and (validation_y < self.size): 
-                        if self.board[validation_x][validation_y] == Piece.Kitten:
+                        space = self.board[validation_x][validation_y]
+                        print('space before eval:', space)
+                        if isinstance(space,Piece) and space.is_kitten():
                             nextvalx = validation_x + x
                             nextvaly = validation_y + y
                             if nextvalx <0 or nextvalx > self.size-1 or nextvaly < 0 or nextvaly > self.size-1:
-                                print('out of bounds')
+                                print(nextvalx, nextvaly, 'is out of bounds')
                                 self.board[validation_x][validation_y]='.'
                             else:
                                 next = self.board[nextvalx][nextvaly]
-                                if next == Piece.Kitten or next == Piece.Cat:
+                                if isinstance(next, Piece) and (next.is_kitten() or next.is_cat()):
                                     print('two pieces, no move')
                                 else: 
                                     print('Boop', validation_x, validation_y)
                                     self.boop_move(origin_x=validation_x, origin_y=validation_y, off_x=x, off_y=y)
                         else:
-                            if self.board[validation_x][validation_y] == Piece.Cat:
+                            if isinstance(space, Piece) and space.is_cat():
                                 print("Validate Cat", validation_x, validation_y, self.board[validation_x][validation_y], type)
-                                if type == Piece.Kitten:
+                                if type.is_kitten():
                                     print('No Boop, kittens do not move Cats.', validation_x, validation_y)
                                     continue
                             nextvalx = validation_x + x
                             nextvaly = validation_y + y
                             if nextvalx <0 or nextvalx > self.size-1 or nextvaly < 0 or nextvaly > self.size-1:
-                                print('out of bounds')
+                                print('out of bounds, if boop, return to inventory!!!')
                                 self.board[validation_x][validation_y]='.'
                             else:
                                 next = self.board[nextvalx][nextvaly]
-                                if type == Piece.Cat:
-                                    if next == Piece.Kitten or next == Piece.Cat:
-                                        print('two pieces, no move')
+                                print('in the else: ', next)
+                                if isinstance(type, Piece) and type.is_cat():
+                                    if isinstance(next, Piece): 
+                                        if next.is_kitten() or next.is_cat():
+                                            print('two pieces, no move')
                                     else: 
                                         print('Boop - cat to cat', validation_x, validation_y)
                                         self.boop_move(origin_x=validation_x, origin_y=validation_y, off_x=x, off_y=y)                                

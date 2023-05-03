@@ -4,8 +4,7 @@ from pyboop.main import Boop, Piece
 
 class BoopTests(unittest.TestCase):
 
-    def setUp(self):
-        print("tests set")
+
 
     def test_init(self):
         boop = Boop(6)
@@ -33,8 +32,8 @@ class BoopTests(unittest.TestCase):
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.']]
-        board[1][1] = Piece.Kitten
-        boop.placePiece(row=1, col=1, type=Piece.Kitten)
+        board[1][1] = Piece.Player1Kitten
+        boop.placePiece(row=1, col=1, type=Piece.Player1Kitten)
         self.assertEqual(boop.board, board, "misplaced kitten")
 
     def test_place_small(self):
@@ -42,8 +41,8 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                     ['.', '.', '.'], 
                     ['.', '.', '.']]
-        board[0][2] = Piece.Kitten
-        boop.placePiece(row=0, col=2, type=Piece.Kitten)
+        board[0][2] = Piece.Player1Kitten
+        boop.placePiece(row=0, col=2, type=Piece.Player1Kitten)
         self.assertEqual(boop.board, board, "misplaced kitten")
 
     def test_place_and_boop(self):
@@ -52,10 +51,10 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placePiece(row=1, col=1, type=Piece.Kitten)
-        boop.placePiece(row=0, col =1, type=Piece.Kitten)
-        board[0][1] = Piece.Kitten
-        board[2][1] = Piece.Kitten
+        boop.placePiece(row=1, col=1, type=Piece.Player1Kitten)
+        boop.placePiece(row=0, col =1, type=Piece.Player1Kitten)
+        board[0][1] = Piece.Player1Kitten
+        board[2][1] = Piece.Player1Kitten
         self.assertEqual(boop.board, board, "failed to boop kitten")
 
     def test_place_and_boop_cat(self):
@@ -64,11 +63,11 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placePiece(row=1, col=1, type=Piece.Cat)
-        boop.placePiece(row=0, col =1, type=Piece.Cat)
-        board[0][1] = Piece.Cat
-        board[2][1] = Piece.Cat
-        self.assertEqual(boop.board, board, "failed to boop kitten")
+        boop.placePiece(row=1, col=1, type=Piece.Player1Cat)
+        boop.placePiece(row=0, col =1, type=Piece.Player2Cat)
+        board[0][1] = Piece.Player2Cat
+        board[2][1] = Piece.Player1Cat
+        self.assertEqual(boop.board, board, "test_place_and_boop_cat")
 
     def test_place_and_kitten_cat_noboop(self):
         boop = Boop(3)
@@ -76,11 +75,14 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placePiece(row=1, col=1, type=Piece.Cat)
-        boop.placePiece(row=0, col =1, type=Piece.Kitten)
-        board[0][1] = Piece.Kitten
-        board[1][1] = Piece.Cat
-        self.assertEqual(boop.board, board, "failed to boop kitten")
+
+        boop.placePiece(row=1, col=1, type=Piece.Player2Cat)
+        boop.placePiece(row=0, col=1, type=Piece.Player1Kitten)
+        board[1][1] = Piece.Player2Cat
+        board[0][1] = Piece.Player1Kitten
+        print("State before test")
+        boop.drawBoard()
+        self.assertEqual(boop.board, board, "FAIL: kitten booped a cat")
 
 
     def test_place_with_edge_left(self):
@@ -89,9 +91,9 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placePiece(row=0, col=1, type=Piece.Kitten)
-        boop.placePiece(row=1, col=1, type=Piece.Kitten)
-        board[1][1] = Piece.Kitten
+        boop.placePiece(row=0, col=1, type=Piece.Player1Kitten)
+        boop.placePiece(row=1, col=1, type=Piece.Player1Kitten)
+        board[1][1] = Piece.Player1Kitten
         self.assertEqual(boop.board, board, "failed to boop kitten")
 
     def test_place_with_edge_cardinal(self):
@@ -100,12 +102,12 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placePiece(row=0, col=1, type=Piece.Kitten)
-        boop.placePiece(row=1, col=0, type=Piece.Kitten)
-        boop.placePiece(row=1, col=2, type=Piece.Kitten)
-        boop.placePiece(row=2, col=1, type=Piece.Kitten)
-        boop.placePiece(row=1, col=1, type=Piece.Kitten)
-        board[1][1] = Piece.Kitten
+        boop.placePiece(row=0, col=1, type=Piece.Player1Kitten)
+        boop.placePiece(row=1, col=0, type=Piece.Player1Kitten)
+        boop.placePiece(row=1, col=2, type=Piece.Player1Kitten)
+        boop.placePiece(row=2, col=1, type=Piece.Player1Kitten)
+        boop.placePiece(row=1, col=1, type=Piece.Player1Kitten)
+        board[1][1] = Piece.Player1Kitten
         self.assertEqual(boop.board, board, "failed to boop kitten")
 
     def test_place_with_edge_corners(self):
@@ -113,12 +115,12 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placePiece(row=0, col=0, type=Piece.Kitten)
-        boop.placePiece(row=0, col=2, type=Piece.Kitten)
-        boop.placePiece(row=2, col=0, type=Piece.Kitten)
-        boop.placePiece(row=2, col=2, type=Piece.Kitten)
-        boop.placePiece(row=1, col=1, type=Piece.Kitten)
-        board[1][1] = Piece.Kitten
+        boop.placePiece(row=0, col=0, type=Piece.Player1Kitten)
+        boop.placePiece(row=0, col=2, type=Piece.Player1Kitten)
+        boop.placePiece(row=2, col=0, type=Piece.Player1Kitten)
+        boop.placePiece(row=2, col=2, type=Piece.Player1Kitten)
+        boop.placePiece(row=1, col=1, type=Piece.Player1Kitten)
+        board[1][1] = Piece.Player1Kitten
         self.assertEqual(boop.board, board, "failed to boop kitten")
 
     def test_two_kitten(self):
@@ -129,14 +131,14 @@ class BoopTests(unittest.TestCase):
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.'], 
                     ['.', '.', '.', '.', '.', '.']]
-        boop.placePiece(row=1, col=1, type=Piece.Kitten)
-        boop.placePiece(row=1, col=3, type=Piece.Kitten)
-        boop.placePiece(row=1, col=4, type=Piece.Kitten)
-        boop.placePiece(row=1, col=3, type=Piece.Kitten)
-        board[1][1] = Piece.Kitten
-        board[1][2] = Piece.Kitten
-        board[1][3] = Piece.Kitten
-        board[1][5] = Piece.Kitten
+        boop.placePiece(row=1, col=1, type=Piece.Player1Kitten)
+        boop.placePiece(row=1, col=3, type=Piece.Player1Kitten)
+        boop.placePiece(row=1, col=4, type=Piece.Player1Kitten)
+        boop.placePiece(row=1, col=3, type=Piece.Player1Kitten)
+        board[1][1] = Piece.Player1Kitten
+        board[1][2] = Piece.Player1Kitten
+        board[1][3] = Piece.Player1Kitten
+        board[1][5] = Piece.Player1Kitten
         self.assertEqual(boop.board, board, "two kittens fail")
 
     def test_place_Cat_with_edge_corners(self):
@@ -144,12 +146,12 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placePiece(row=0, col=0, type=Piece.Kitten)
-        boop.placePiece(row=0, col=2, type=Piece.Kitten)
-        boop.placePiece(row=2, col=0, type=Piece.Kitten)
-        boop.placePiece(row=2, col=2, type=Piece.Kitten)
-        boop.placePiece(row=1, col=1, type=Piece.Cat)
-        board[1][1] = Piece.Cat
+        boop.placePiece(row=0, col=0, type=Piece.Player1Kitten)
+        boop.placePiece(row=0, col=2, type=Piece.Player1Kitten)
+        boop.placePiece(row=2, col=0, type=Piece.Player1Kitten)
+        boop.placePiece(row=2, col=2, type=Piece.Player1Kitten)
+        boop.placePiece(row=1, col=1, type=Piece.Player2Cat)
+        board[1][1] = Piece.Player2Cat
         self.assertEqual(boop.board, board, "failed to boop kitten")
 
     def test_place_Cat_with_Cats_edge_corners(self):
@@ -157,12 +159,12 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placePiece(row=0, col=0, type=Piece.Cat)
-        boop.placePiece(row=0, col=2, type=Piece.Cat)
-        boop.placePiece(row=2, col=0, type=Piece.Cat)
-        boop.placePiece(row=2, col=2, type=Piece.Cat)
-        boop.placePiece(row=1, col=1, type=Piece.Cat)
-        board[1][1] = Piece.Cat
+        boop.placePiece(row=0, col=0, type=Piece.Player2Cat)
+        boop.placePiece(row=0, col=2, type=Piece.Player2Cat)
+        boop.placePiece(row=2, col=0, type=Piece.Player2Cat)
+        boop.placePiece(row=2, col=2, type=Piece.Player2Cat)
+        boop.placePiece(row=1, col=1, type=Piece.Player1Cat)
+        board[1][1] = Piece.Player1Cat
         self.assertEqual(boop.board, board, "failed to boop kitten")
 
     def test_place_kitten_with_Cats_edge_corners(self):
@@ -170,16 +172,16 @@ class BoopTests(unittest.TestCase):
         board = [['.', '.', '.'], 
                  ['.', '.', '.'],
                  ['.', '.', '.']]
-        boop.placePiece(row=0, col=0, type=Piece.Cat)
-        boop.placePiece(row=0, col=2, type=Piece.Cat)
-        boop.placePiece(row=2, col=0, type=Piece.Cat)
-        boop.placePiece(row=2, col=2, type=Piece.Cat)
-        boop.placePiece(row=1, col=1, type=Piece.Kitten)
-        board[1][1] = Piece.Kitten
-        board[0][0] = Piece.Cat
-        board[0][2] = Piece.Cat
-        board[2][0] = Piece.Cat
-        board[2][2] = Piece.Cat
+        boop.placePiece(row=0, col=0, type=Piece.Player2Cat)
+        boop.placePiece(row=0, col=2, type=Piece.Player2Cat)
+        boop.placePiece(row=2, col=0, type=Piece.Player2Cat)
+        boop.placePiece(row=2, col=2, type=Piece.Player2Cat)
+        boop.placePiece(row=1, col=1, type=Piece.Player1Kitten)
+        board[1][1] = Piece.Player1Kitten
+        board[0][0] = Piece.Player2Cat
+        board[0][2] = Piece.Player2Cat
+        board[2][0] = Piece.Player2Cat
+        board[2][2] = Piece.Player2Cat
         boop.drawBoard()
         self.assertEqual(boop.board, board, "failed to boop kitten")
 
